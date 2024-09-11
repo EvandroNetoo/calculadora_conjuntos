@@ -199,6 +199,7 @@ bool coordenada_esta_no_plano_cartesiano(Coordenada coordenada, Coordenada *plan
     }
     return false;
 }
+
 Coordenada *produto_cartesiano(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)
 {
 
