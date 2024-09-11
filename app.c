@@ -6,6 +6,22 @@
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
+#define VERMELHO "\033[31m"
+#define CIANO "\033[36m"
+#define BRANCO "\033[37m"
+
+void imprimir_menu()
+{
+    printf("0. Sair\n");
+    printf("1. Inserir novos conjuntos A e B\n");
+    printf("2. A U B\n");
+    printf("3. A ∩ B\n");
+    printf("4. A - B\n");
+    printf("5. B - A\n");
+    printf("6. A ∆ B\n");
+    printf("7. A x B\n");
+}
+
 bool elemento_esta_no_conjunto(int elemento, int *conjunto, int len)
 {
     int i;
@@ -52,7 +68,7 @@ void imprimir(int *conjunto, int len)
 {
     int i;
 
-    printf("{");
+    printf(CIANO "{");
     for (i = 0; i < len; i++)
     {
         if (i < len - 1)
@@ -61,27 +77,10 @@ void imprimir(int *conjunto, int len)
         }
         else
         {
-            printf("%d}\n", conjunto[i]);
+            printf("%d", conjunto[i]);
         }
     }
-}
-
-void imprimir_produto_cartesiano(int *conjunto, int len)
-{
-    int i;
-
-    printf("{");
-    for (i = 0; i < len; i = i + 2)
-    {
-        if (i < len - 2)
-        {
-            printf("{%d, %d}, ", conjunto[i], conjunto[i + 1]);
-        }
-        else
-        {
-            printf("{%d, %d}}\n", conjunto[i], conjunto[i + 1]);
-        }
-    }
+    printf("}\n" BRANCO);
 }
 
 int *uniao(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)
@@ -161,26 +160,80 @@ int *diferenca_simetrica(int *conjunto_a, int len_a, int *conjunto_b, int len_b,
     return conj_resposta;
 }
 
-int *produto_cartesiano(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)
+typedef struct
 {
-    *len_res = len_a * len_b;
+    int x;
+    int y;
+} Coordenada;
+
+void imprimir_produto_cartesiano(Coordenada *conjunto, int len)
+{
+    int i;
+    Coordenada coordenada;
+
+    printf(CIANO "{");
+    for (i = 0; i < len; i++)
+    {
+        coordenada = conjunto[i];
+        if (i < len - 1)
+        {
+            printf("{%d, %d}, ", coordenada.x, coordenada.y);
+        }
+        else
+        {
+            printf("{%d, %d}", coordenada.x, coordenada.y);
+        }
+    }
+    printf("}\n" BRANCO);
+}
+
+bool coordenada_esta_no_plano_cartesiano(Coordenada coordenada, Coordenada *plano_cartesiano, int len)
+{
+    int i;
+    for (i = 0; i < len; i++)
+    {
+        if (plano_cartesiano[i].x == coordenada.x && plano_cartesiano[i].y == coordenada.y)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+Coordenada *produto_cartesiano(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)
+{
 
     int i, j, len_atual = 0;
-    int *conj_resposta = (int *)malloc(*len_res * sizeof(int));
+    Coordenada *plano_cartesiano = (Coordenada *)malloc(len_a * len_b * 2 * sizeof(Coordenada));
+    Coordenada coordenada;
 
     for (i = 0; i < len_a; i++)
     {
-        for (j = 0; j < len_a; j++)
+        for (j = 0; j < len_b; j++)
         {
-            conj_resposta[len_atual++] = conjunto_a[i];
-            conj_resposta[len_atual++] = conjunto_b[j];
+            coordenada.x = conjunto_a[i];
+            coordenada.y = conjunto_b[j];
+
+            if (!coordenada_esta_no_plano_cartesiano(coordenada, plano_cartesiano, len_atual))
+            {
+                plano_cartesiano[len_atual++] = coordenada;
+            }
+
+            coordenada.x = conjunto_b[j];
+            coordenada.y = conjunto_a[i];
+
+            if (!coordenada_esta_no_plano_cartesiano(coordenada, plano_cartesiano, len_atual))
+            {
+                plano_cartesiano[len_atual++] = coordenada;
+            }
         }
     }
 
-    return conj_resposta;
+    *len_res = len_atual;
+
+    plano_cartesiano = (Coordenada *)realloc(plano_cartesiano, (*len_res) * sizeof(Coordenada));
+
+    return plano_cartesiano;
 }
-
-
 
 int main()
 {
@@ -191,17 +244,11 @@ int main()
     int *conj_b = ler_conjunto('B', &len_b);
     int *conj_resposta;
     int opcao;
+    Coordenada *plano_cartesiano;
 
     while (true)
     {
-        printf("0. Sair\n");
-        printf("1. Inserir novos conjuntos A e B\n");
-        printf("2. A U B\n");
-        printf("3. A ∩ B\n");
-        printf("4. A - B\n");
-        printf("5. B - A\n");
-        printf("6. A ∆ B\n");
-        printf("7. A x B\n");
+        imprimir_menu();
 
         printf("Opção: ");
         scanf("%d", &opcao);
@@ -244,12 +291,12 @@ int main()
             break;
 
         case 7:
-            conj_resposta = produto_cartesiano(conj_a, len_a, conj_b, len_b, &len_res);
-            imprimir_produto_cartesiano(conj_resposta, len_res);
+            plano_cartesiano = produto_cartesiano(conj_a, len_a, conj_b, len_b, &len_res);
+            imprimir_produto_cartesiano(plano_cartesiano, len_res);
             break;
 
         default:
-            printf("Opção inválida\n");
+            printf(VERMELHO "Opção inválida\n" BRANCO);
             break;
         }
     }
