@@ -187,24 +187,11 @@ void imprimir_produto_cartesiano(Coordenada *conjunto, int len)
     printf("}\n" BRANCO);
 }
 
-bool coordenada_esta_no_plano_cartesiano(Coordenada coordenada, Coordenada *plano_cartesiano, int len)
-{
-    int i;
-    for (i = 0; i < len; i++)
-    {
-        if (plano_cartesiano[i].x == coordenada.x && plano_cartesiano[i].y == coordenada.y)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
 Coordenada *produto_cartesiano(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)
 {
 
     int i, j, len_atual = 0;
-    Coordenada *plano_cartesiano = (Coordenada *)malloc(len_a * len_b * 2 * sizeof(Coordenada));
+    Coordenada *plano_cartesiano = (Coordenada *)malloc(len_a * len_b * sizeof(Coordenada));
     Coordenada coordenada;
 
     for (i = 0; i < len_a; i++)
@@ -214,18 +201,7 @@ Coordenada *produto_cartesiano(int *conjunto_a, int len_a, int *conjunto_b, int 
             coordenada.x = conjunto_a[i];
             coordenada.y = conjunto_b[j];
 
-            if (!coordenada_esta_no_plano_cartesiano(coordenada, plano_cartesiano, len_atual))
-            {
-                plano_cartesiano[len_atual++] = coordenada;
-            }
-
-            coordenada.x = conjunto_b[j];
-            coordenada.y = conjunto_a[i];
-
-            if (!coordenada_esta_no_plano_cartesiano(coordenada, plano_cartesiano, len_atual))
-            {
-                plano_cartesiano[len_atual++] = coordenada;
-            }
+            plano_cartesiano[len_atual++] = coordenada;
         }
     }
 
