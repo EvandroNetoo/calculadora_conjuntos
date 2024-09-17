@@ -10,6 +10,7 @@
 #define CIANO "\033[36m"
 #define BRANCO "\033[37m"
 
+
 void imprimir_menu()
 {
     printf("0. Sair\n");
