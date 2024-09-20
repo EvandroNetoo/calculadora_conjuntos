@@ -13,4 +13,11 @@ markdown_extensions:
   - pymdownx.superfences
 
 plugins:
-  - with-pdf
+  - with-pdf:
+      author: Evandro Ribeiro da Silva Neto
+      copyright: ' '
+      cover_title: Calculadora de conjuntos numericos
+      cover_subtitle: Documentação
+      output_path: document.pdf
+      toc_title: Sumário
+      heading_shift: false

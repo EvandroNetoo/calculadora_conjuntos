@@ -1,50 +1,6 @@
-# Documentação
+# Funções
 
-## Bibliotecas e definições
-
-### Bibliotecas
-
-São importadas bibliotecas padrão para:
-
-- **Entrada e saída de dados** (`stdio.h`)
-- **Alocação dinâmica de memória** (`stdlib.h`)
-- **Uso de tipos booleanos** (`stdbool.h`)
-- **Funções específicas do Windows**, como a definição do código de página UTF-8 no console (`windows.h`).
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <windows.h>
-```
-
-### Macros max e min
-
-Definem funções inline para calcular o valor máximo e mínimo entre dois valores, permitindo a reutilização dessas operações em diversas partes do código de forma otimizada.
-
-```c
-#define max(a, b) (((a) > (b)) ? (a) : (b))
-#define min(a, b) (((a) < (b)) ? (a) : (b))
-```
-
-### Códigos de Cores
-
-Define códigos de cor ANSI para estilizar a saída no console. As cores disponíveis são:
-
-- **Vermelho** (`VERMELHO`)
-- **Ciano** (`CIANO`)
-- **Branco** (`BRANCO`)
-
-Esses códigos são usados para tornar a interface mais intuitiva ao usuário.
-```c
-#define VERMELHO "\033[31m"
-#define CIANO "\033[36m"
-#define BRANCO "\033[37m"
-```
-
-## Funções
-
-### `void imprimir_menu()`
+## `void imprimir_menu()`
 Exibe um menu com as opções de operações de conjuntos, facilitando a escolha da ação que o usuário deseja realizar. Esta função não recebe parâmetros e não retorna valores.
 ```c
 void imprimir_menu()
@@ -60,7 +16,7 @@ void imprimir_menu()
 }
 ```
 
-### `bool elemento_esta_no_conjunto(int elemento, int *conjunto, int len)`
+## `bool elemento_esta_no_conjunto(int elemento, int *conjunto, int len)`
 Verifica se um determinado elemento está presente no conjunto. Esta função recebe um elemento a ser buscado, um ponteiro para o conjunto (array de inteiros) e o tamanho do conjunto. Retorna `true` se o elemento for encontrado, e `false` caso contrário.
 ```c
 bool elemento_esta_no_conjunto(int elemento, int *conjunto, int len)
@@ -77,7 +33,7 @@ bool elemento_esta_no_conjunto(int elemento, int *conjunto, int len)
 }
 ```
 
-### `int *ler_conjunto(char letra_conjunto, int *len)`
+## `int *ler_conjunto(char letra_conjunto, int *len)`
 Lê os valores de um conjunto inseridos pelo usuário, evitando valores duplicados. Esta função recebe o nome do conjunto (`A` ou `B`) e um ponteiro para o tamanho do conjunto, que será atualizado conforme a entrada. Retorna um ponteiro para o array dinâmico contendo os valores únicos inseridos.
 ```c
 int *ler_conjunto(char letra_conjunto, int *len)
@@ -111,7 +67,7 @@ int *ler_conjunto(char letra_conjunto, int *len)
 ```
 
 
-### `void imprimir(int *conjunto, int len)`
+## `void imprimir(int *conjunto, int len)`
 Imprime os elementos de um conjunto entre chaves ({}), separando os valores por vírgulas. Utiliza a cor definida pela macro CIANO para destacar o conjunto no terminal.
 ```c
 void imprimir(int *conjunto, int len)
@@ -134,7 +90,7 @@ void imprimir(int *conjunto, int len)
 }
 ```
 
-### `int *uniao(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)`
+## `int *uniao(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)`
 Calcula a união entre dois conjuntos, retornando um novo conjunto contendo todos os elementos dos conjuntos A e B, sem duplicatas. A função recebe os dois conjuntos, seus respectivos tamanhos e retorna o conjunto união, atualizando o tamanho do resultado.
 ```c
 int *uniao(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)
@@ -163,7 +119,7 @@ int *uniao(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)
 }
 ```
 
-### `int *interseccao(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)`
+## `int *interseccao(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)`
 Calcula a interseção entre dois conjuntos, retornando um novo conjunto contendo apenas os elementos que estão presentes em ambos os conjuntos A e B. A função recebe os dois conjuntos, seus respectivos tamanhos e retorna o conjunto interseção, atualizando o tamanho do resultado.
 ```c
 int *interseccao(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)
@@ -188,7 +144,7 @@ int *interseccao(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *le
 }
 ```
 
-### `int *diferenca(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)`
+## `int *diferenca(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)`
 Calcula a diferença entre dois conjuntos. Retorna um novo conjunto contendo todos os elementos do conjunto A que não estão presentes no conjunto B. A função recebe os dois conjuntos, seus respectivos tamanhos e retorna o conjunto diferença, atualizando o tamanho do resultado.
 ```c
 int *diferenca(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)
@@ -212,7 +168,7 @@ int *diferenca(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_
 }
 ```
 
-### `int *diferenca_simetrica(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)`
+## `int *diferenca_simetrica(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)`
 Calcula a diferença simétrica entre dois conjuntos. A diferença simétrica é o conjunto de elementos que estão em A ou em B, mas não em ambos. A função faz uso da união e da interseção para calcular a diferença simétrica. Ela retorna o conjunto resultante e atualiza o tamanho do resultado.
 ```c
 int *diferenca_simetrica(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)
@@ -227,7 +183,7 @@ int *diferenca_simetrica(int *conjunto_a, int len_a, int *conjunto_b, int len_b,
 }
 ```
 
-### `typedef struct { int x; int y; } Coordenada`
+## `typedef struct { int x; int y; } Coordenada`
 Define uma estrutura Coordenada que representa um ponto no plano cartesiano, onde x e y são as coordenadas inteiras. Essa estrutura é usada para representar os pares no produto cartesiano.
 ```c
 typedef struct
@@ -237,7 +193,7 @@ typedef struct
 } Coordenada;
 ```
 
-### `void imprimir_produto_cartesiano(Coordenada *conjunto, int len)`
+## `void imprimir_produto_cartesiano(Coordenada *conjunto, int len)`
 Imprime o resultado do produto cartesiano entre dois conjuntos, exibindo os pares ordenados de coordenadas no formato {x, y}. A função utiliza a cor CIANO para estilizar a saída.
 ```c
 void imprimir_produto_cartesiano(Coordenada *conjunto, int len)
@@ -262,7 +218,7 @@ void imprimir_produto_cartesiano(Coordenada *conjunto, int len)
 }
 ```
 
-### `Coordenada *produto_cartesiano(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res))`
+## `Coordenada *produto_cartesiano(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res))`
 Calcula o produto cartesiano entre dois conjuntos, resultando em um conjunto de pares ordenados (a, b), onde a pertence ao conjunto A e b pertence ao conjunto B. A função aloca dinamicamente um array de estruturas Coordenada e retorna o resultado, além de atualizar o tamanho do conjunto resultante.
 ```c
 Coordenada *produto_cartesiano(int *conjunto_a, int len_a, int *conjunto_b, int len_b, int *len_res)
@@ -290,8 +246,18 @@ Coordenada *produto_cartesiano(int *conjunto_a, int len_a, int *conjunto_b, int 
 }
 ```
 
-### `int main()`
-Função principal que gerencia a interação com o usuário, incluindo a leitura dos conjuntos, a exibição do menu e a execução das operações escolhidas (união, interseção, diferença, diferença simétrica e produto cartesiano). O código também lida com a alocação e liberação dinâmica de memória.
+## `int comparador(const void *a, const void *b)`
+Função de comparação utilizada para ordenar os conjuntos. A função compara dois ponteiros para inteiros e retorna a diferença entre eles, o que permite que a função qsort organize os elementos em ordem crescente.
+```c
+int comparador(const void *a, const void *b)
+{
+    return (*(int *)a - *(int *)b);
+}
+```
+
+
+## `int main()`
+Função principal que gerencia a interação com o usuário, incluindo a leitura dos conjuntos, ordenação dos mesmos, a exibição do menu e a execução das operações escolhidas (união, interseção, diferença, diferença simétrica e produto cartesiano). O código também lida com a alocação e liberação dinâmica de memória.
 ```c
 int main()
 {
@@ -299,7 +265,9 @@ int main()
 
     int len_a, len_b, len_res;
     int *conj_a = ler_conjunto('A', &len_a);
+    qsort(conj_a, len_a, sizeof(int), comparador);
     int *conj_b = ler_conjunto('B', &len_b);
+    qsort(conj_b, len_b, sizeof(int), comparador);
     int *conj_resposta;
     int opcao;
     Coordenada *plano_cartesiano;

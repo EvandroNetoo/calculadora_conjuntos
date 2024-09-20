@@ -212,13 +212,19 @@ Coordenada *produto_cartesiano(int *conjunto_a, int len_a, int *conjunto_b, int 
     return plano_cartesiano;
 }
 
+int comparador(const void* a, const void* b) {
+   return (*(int*)a - *(int*)b);
+}
+
 int main()
 {
     SetConsoleOutputCP(CP_UTF8);
 
     int len_a, len_b, len_res;
     int *conj_a = ler_conjunto('A', &len_a);
+    qsort(conj_a, len_a, sizeof(int), comparador);
     int *conj_b = ler_conjunto('B', &len_b);
+    qsort(conj_b, len_b, sizeof(int), comparador);
     int *conj_resposta;
     int opcao;
     Coordenada *plano_cartesiano;
